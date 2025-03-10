@@ -81,4 +81,5 @@ public class CharacterMovement : MonoBehaviour
         //    characterAnimator.SetBool("doubleSpace", doubleSpacePressed);
         characterAnimator.SetInteger("jumpCount", jumpCounter);
     }
+    
 }
