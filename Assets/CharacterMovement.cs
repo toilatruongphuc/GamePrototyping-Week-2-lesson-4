@@ -3,19 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class CharacterMovement : MonoBehaviour
 {
+    
+    
     public CharacterInputs characterInputs;
     [SerializeField] Animator characterAnimator;
-    [SerializeField] private float movespeed = 5;
-    [SerializeField] private float jumpPower = 5;
+    //[SerializeField] private float movespeed = 5;
+    //[SerializeField] private float jumpPower = 5;
+    [SerializeField] private CharacterSO characterSO;
     [SerializeField] private Rigidbody2D characterRigidbody;
     [SerializeField] SpriteRenderer characterSpriteRenderer;
     private Vector2 moveDirection;
     int jumpCounter = 0;
     private bool isGrounding = false;
-    //private bool doubleSpacePressed = false;
+    private Score score;
+    private Collectibles collectibles;
+
+    // if level up is implemented
+    //private  CharacterData characterData;
+    private void Start()
+    {
+        //characterData = new CharacterData(characterSO);
+        score = GetComponent<Score>();
+        collectibles = GetComponent<Collectibles>();
+    }
+
     private void Awake()
     {
         characterInputs = new CharacterInputs();
@@ -44,14 +59,14 @@ public class CharacterMovement : MonoBehaviour
         AnimatorHandle();
         moveDirection = characterInputs.Character.Movement.ReadValue<Vector2>();
 
-        characterRigidbody.velocity = new Vector2(moveDirection.x * movespeed, characterRigidbody.velocity.y);
+        characterRigidbody.velocity = new Vector2(moveDirection.x * characterSO.CharacterMoveSpeed, characterRigidbody.velocity.y);
     }
     private void OnJump(InputAction.CallbackContext context)
     {
         if (isGrounding || jumpCounter < 2)
         {
             isGrounding = false;
-            characterRigidbody.velocity = new Vector2(characterRigidbody.velocity.x, jumpPower);
+            characterRigidbody.velocity = new Vector2(characterRigidbody.velocity.x, characterSO.CharacterJumpPower);
             jumpCounter++;
         }
     }
@@ -81,5 +96,13 @@ public class CharacterMovement : MonoBehaviour
         //    characterAnimator.SetBool("doubleSpace", doubleSpacePressed);
         characterAnimator.SetInteger("jumpCount", jumpCounter);
     }
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Collectibles"))
+        {
+            Debug.Log("Collided");
+            score.Addition();
+            Destroy(collision.gameObject);
+        }
+    }
 }

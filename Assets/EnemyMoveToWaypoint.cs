@@ -13,7 +13,7 @@ public class EnemyMoveToWaypoint : MonoBehaviour
     private int currentIndex = 0;
     private Transform currentWaypoint;
 
-    [SerializeField] float movespeed;
+    [SerializeField] private EnemySO enemySO;
     private int moveDirection;
     // Start is called before the first frame update
     void Start()
@@ -49,7 +49,7 @@ public class EnemyMoveToWaypoint : MonoBehaviour
             currentWaypoint = waypoints[currentIndex];
             moveDirection = currentWaypoint.position.x - transform.position.x < 0 ? -1 : 1;
         }
-        characterRigidbody.velocity = new Vector2(moveDirection * movespeed, characterRigidbody.velocity.y);
+        characterRigidbody.velocity = new Vector2(moveDirection * enemySO.moveSpeed, characterRigidbody.velocity.y);
     }
     private void AnimatorHandle()
     {
