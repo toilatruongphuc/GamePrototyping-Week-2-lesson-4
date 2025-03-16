@@ -9,7 +9,7 @@ public class Score : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            display.text = $"Strawberries: {score}";
+            
     }
     public int Addition()
     {
@@ -25,5 +25,17 @@ public class Score : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Addition();
+            OnDestroy();
+        }
+    }
+    private void OnDestroy()
+    {
+        Destroy(gameObject);
     }
 }

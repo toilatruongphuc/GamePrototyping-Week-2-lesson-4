@@ -7,8 +7,9 @@ using TMPro;
 
 public class CharacterMovement : MonoBehaviour
 {
-    
-    
+
+    public TextMeshProUGUI displayScore;
+    private int score = 0;
     public CharacterInputs characterInputs;
     [SerializeField] Animator characterAnimator;
     //[SerializeField] private float movespeed = 5;
@@ -19,21 +20,18 @@ public class CharacterMovement : MonoBehaviour
     private Vector2 moveDirection;
     int jumpCounter = 0;
     private bool isGrounding = false;
-    private Score score;
-    private Collectibles collectibles;
 
     // if level up is implemented
     //private  CharacterData characterData;
     private void Start()
     {
         //characterData = new CharacterData(characterSO);
-        score = GetComponent<Score>();
-        collectibles = GetComponent<Collectibles>();
     }
 
     private void Awake()
     {
         characterInputs = new CharacterInputs();
+        displayScore.text = $"Strawberries: {score}";
     }
     private void OnEnable()
     {
@@ -96,13 +94,23 @@ public class CharacterMovement : MonoBehaviour
         //    characterAnimator.SetBool("doubleSpace", doubleSpacePressed);
         characterAnimator.SetInteger("jumpCount", jumpCounter);
     }
+    public int Addition()
+    {
+        score++;
+        DisplayScore();
+        return score;
+    }
+    private void DisplayScore()
+    {
+        displayScore.text = $"Strawberries: {score}";
+    }
+    // Update is called once per frame
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Collectibles"))
         {
-            Debug.Log("Collided");
-            score.Addition();
-            Destroy(collision.gameObject);
+            Addition();
+            
         }
     }
 }

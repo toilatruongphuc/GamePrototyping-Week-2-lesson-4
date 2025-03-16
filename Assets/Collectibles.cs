@@ -1,34 +1,35 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-
 
 public class Collectibles : MonoBehaviour
 {
-    
-    // Start is called before the first frame update
+    [SerializeField] Animator StrawberryAnimator;
     void Start()
     {
-       
+
     }
-    // Update is called once per frame
     void Update()
     {
-        
+
     }
-    //public void OnDestroy()
-    //{
-    //    Destroy(gameObject);
-    //}
-    //void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if (other.gameObject.CompareTag("Player"))
-    //    {
-    //        Debug.Log("collided");
-    //        StrawberriesCollected++;
-    //        Strawberries.text = $"Strawberries: {StrawberriesCollected}";
-    //        Destroy(gameObject);
-    //    }
-    //}
+
+    private void AnimatorHandle()
+    {
+        StrawberryAnimator.SetTrigger("Trigger Collected");
+    }
+
+    private IEnumerator PlayAnimationAndDestroy()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            AnimatorHandle();
+            StartCoroutine(PlayAnimationAndDestroy());  
+        }
+    }
 }
