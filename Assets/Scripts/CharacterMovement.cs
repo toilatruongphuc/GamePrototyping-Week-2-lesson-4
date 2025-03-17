@@ -11,6 +11,7 @@ public class CharacterMovement : MonoBehaviour
     public TextMeshProUGUI displayScore;
     private int score = 0;
     public CharacterInputs characterInputs;
+    public GameManagerScript gameManagerScript;
     [SerializeField] Animator characterAnimator;
     //[SerializeField] private float movespeed = 5;
     //[SerializeField] private float jumpPower = 5;
@@ -110,7 +111,19 @@ public class CharacterMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Collectibles"))
         {
             Addition();
-            
         }
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("enemy hit");
+            characterAnimator.SetBool("Hit", true);
+            PlayAnimationHitPlayer();
+        }
+    }
+    private IEnumerator PlayAnimationHitPlayer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+        gameManagerScript.gameOver();
+
     }
 }

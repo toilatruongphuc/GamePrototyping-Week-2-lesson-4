@@ -63,4 +63,11 @@ public class EnemyMoveToWaypoint : MonoBehaviour
             characterSpriteRenderer.flipX = true;
         }
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("player hit");
+        }
+    }
 }
