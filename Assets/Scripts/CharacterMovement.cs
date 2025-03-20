@@ -116,10 +116,10 @@ public class CharacterMovement : MonoBehaviour
         {
             Debug.Log("enemy hit");
             characterAnimator.SetBool("Hit", true);
-            PlayAnimationHitPlayer();
+            PlayAnimationKillPlayer();
         }
     }
-    private IEnumerator PlayAnimationHitPlayer()
+    private IEnumerator PlayAnimationKillPlayer()
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
