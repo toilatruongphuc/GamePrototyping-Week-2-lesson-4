@@ -9,6 +9,7 @@ TagManager:
   - Enemy waypoint
   - Collectibles
   - Lv1Portal
+  - Spikes
   layers:
   - Default
   - TransparentFX

@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0295ed1f366a09d4da96b116c4643e4b, type: 3}
-  m_Name: CharacterSO
+  m_Script: {fileID: 11500000, guid: d19590eab131e1646b608e609f407324, type: 3}
+  m_Name: FlyingBlockSO
   m_EditorClassIdentifier: 
-  CharacterName: 
-  CharacterJumpPower: 4
-  CharacterMoveSpeed: 4
+  moveSpeed: 2

@@ -21,6 +21,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector2 moveDirection;
     int jumpCounter = 0;
     private bool isGrounding = false;
+    int spikesTouched = 0;
 
     // if level up is implemented
     //private  CharacterData characterData;
@@ -116,14 +117,27 @@ public class CharacterMovement : MonoBehaviour
         {
             Debug.Log("enemy hit");
             characterAnimator.SetBool("Hit", true);
-            PlayAnimationKillPlayer();
+            StartCoroutine(PlayAnimationPlayerHit());
+        }
+        if (collision.gameObject.CompareTag("Spikes"))
+        {
+            spikesTouched++;
+            if (spikesTouched >= 2)
+            {
+                Debug.Log("spikes hit");
+                characterAnimator.SetBool("Hit", true);
+                StartCoroutine(PlayAnimationPlayerHit());
+            }
         }
     }
-    private IEnumerator PlayAnimationKillPlayer()
+    private IEnumerator PlayAnimationPlayerHit()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+        KillPlayer();
+    }
+    private void KillPlayer()
+    {
+        gameManagerScript.GameOver();
         Destroy(gameObject);
-        gameManagerScript.gameOver();
-
     }
 }
